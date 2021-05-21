@@ -1,14 +1,19 @@
+from fastapi import FastAPI
 from motor import motor_asyncio
 import asyncio
 
+
+# set up database
 client = motor_asyncio.AsyncIOMotorClient("localhost", 27017)
-db = client.BDO
+db = client.EDU
+
+# import own files
+import database.py
+import schema.py
+
+webapp = FastAPI()
 
 
-async def do_count():
-    n = await db.dataset.count_documents({})
-    print("%s documents in collection" % n)
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(do_count())
+@webapp.get("/")
+async def index():
+    return {"hello": "world"}
