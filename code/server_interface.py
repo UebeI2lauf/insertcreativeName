@@ -70,6 +70,26 @@ class User(BaseModel):
         }
 
 
+class UpdateUser(BaseModel):
+    name: str = Field(...)
+    email: EmailStr = Field(...)
+    age: int = Field(...)
+    gender: str = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "name": "Gustav Ganz",
+                "email": "ganzganz@gmail.com",
+                "age": "13",
+                "gender": "m",
+            }
+        }
+
+
 class Questions(ObjectId):
     id: PyMongoObjectID = Field(default_factory=PyMongoObjectID, alias="_id")
     nr: int = Field(...)
@@ -94,3 +114,21 @@ async def show_student(username: str):
         raise HTTPException(
             status_code=404, detail=f"User {username} wurde nicht gefunden"
         )
+
+
+@webapp.post("/{username}", response_description="mod User", response_model=User)
+async def update_user(username: str, user: UpdateUser = Body(...)):
+    user = {
+        key: value for key, value in user.dict().items() if value is not None
+    }  # We build a new dict with theb old values
+    if len(user) >= 1:
+        change = await db["user"].update_one({"username": username}, {"$set": user})
+        if change.modified_count == 1:
+            if (
+                changed := await db["user"].find_one({"username": username})
+            ) is not None:
+                return changed
+
+    if (user_is_there := await db["user"].find_one({"username": username})) is not None:
+        return user_is_there
+    raise HTTPException(status_code=404, detail=f"Unable to find User {username}")
