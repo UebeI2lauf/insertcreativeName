@@ -70,14 +70,12 @@ class User(BaseModel):
         }
 
 
-"""
 class Questions(ObjectId):
     id: PyMongoObjectID = Field(default_factory=PyMongoObjectID, alias="_id")
     nr: int = Field(...)
     author: PyMongoObjectID = Field(default_factory=PyMongoObjectID, alias="_id")
     subject: str = Field(...)
     author_id: int = Field(...)
-"""
 
 
 @webapp.post("/", response_description="Add a user", response_model=User)
@@ -86,3 +84,13 @@ async def create_user(user: User = Body(...)):
     new_user = await db["user"].insert_one(user)
     lookup_new_user = await db["user"].find_one({"_id": new_user.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=lookup_new_user)
+
+
+@webapp.get("/{username}", response_description="Lookup a User", response_model=User)
+async def show_student(username: str):
+    if (user := await db["user"].find_one({"username": username})) is not None:
+        return user
+    else:
+        raise HTTPException(
+            status_code=404, detail=f"User {username} wurde nicht gefunden"
+        )
