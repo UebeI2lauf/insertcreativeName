@@ -1,4 +1,5 @@
 # MongoDB base module -> ObjectId
+from abc import ABC
 from bson import ObjectId
 
 # import pydantic stuff
@@ -94,4 +95,41 @@ class Questions(BaseModel):
                 "Antwort_Four": "6",
                 "Richtig": "4",
             }
+        }
+
+
+class RNDQuestions(BaseModel):
+    Frage: str = Field(...)
+    Antwort_One: str = Field(...)
+    Antwort_Two: str = Field(...)
+    Antwort_Three: str = Field(...)
+    Antwort_Four: str = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "Frage": "3 + 3",
+                "Antwort_One": "16",
+                "Antwort_Two": "5",
+                "Antwort_Three": "8",
+                "Antwort_Four": "6",
+            }
+        }
+
+
+class AnswereQuestion(BaseModel):
+    id: PyMongoObjectID = Field(default_factory=PyMongoObjectID, alias="_id")
+    Answere: int = Field(..., lt=5)
+    Username: str = Field(...)
+    question_nr: int = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {"Answere": "2", "Username": "ABC", "question_nr": "13"}
         }

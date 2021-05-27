@@ -2,6 +2,7 @@
 from fastapi import FastAPI, status, Body, HTTPException
 from fastapi.encoders import jsonable_encoder
 from starlette.responses import JSONResponse
+import random
 
 
 # Import MongoDB module
@@ -11,10 +12,8 @@ from database import db
 # import local files ,some highlighting seems to be buggy depends on formatter
 import schema
 
-
-# Side Note the uvicorn server is the main instance
-# The normal __name__ == "__main__" would reult in False
-# This code is more like a "Module"
+# set seed
+random.seed(667)
 
 # create the web application itself
 webapp = FastAPI()
@@ -82,3 +81,36 @@ async def show_question(nr: int):
         raise HTTPException(
             status_code=404, detail=f"Question {nr} wurde nicht gefunden"
         )
+
+
+@webapp.get(
+    "/question/",
+    response_description="Get a random question",
+    response_model=schema.RNDQuestions,
+)
+async def getRNDquestion(raise_error: bool):
+    if raise_error is not False:
+        raise HTTPException(
+            status_code=404, detail="Any unexpected event accured pls try again"
+        )
+    else:
+        questions = await db["question"].find().to_list(length=100)
+        lenght = len(questions)
+        selection = random.randint(0, lenght - 1)
+        """ raise HTTPException(
+            status_code=404,
+            detail="Any unexpected event accured pls try again is was True",
+        ) """
+        return questions[selection]
+
+
+@webapp.post(
+    "/questions/log/{nr}",
+    response_description="Answere question",
+    response_model=schema.AnswereQuestion,
+)
+async def push_question(answere: schema.AnswereQuestion = Body(...)):
+    answere = jsonable_encoder(answere)
+    new_answere = await db["answere"].insert_one(answere)
+    lookup = await db["answere"].find_one({"_id": new_answere.inserted_id})
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=lookup)
