@@ -1,25 +1,26 @@
 # Import fastAPI modules
-from fastapi import FastAPI, status, Body, HTTPException
-from fastapi.encoders import jsonable_encoder
-from starlette.responses import JSONResponse
-import random
+from fastapi import FastAPI  # , status, Body, HTTPException
+from routers import user, questions
+
+# from fastapi.encoders import jsonable_encoder
+# from starlette.responses import JSONResponse
 
 
 # Import MongoDB module
-from database import db
+# from .database import db
 
 
 # import local files ,some highlighting seems to be buggy depends on formatter
-import schema
-
-# set seed
-random.seed(667)
+# import schema
 
 # create the web application itself
 webapp = FastAPI()
 
+webapp.include_router(user.router)
+webapp.include_router(questions.router)
 
-@webapp.post("/user", response_description="Add a user", response_model=schema.User)
+
+""" @webapp.post("/user", response_description="Add a user", response_model=schema.User)
 async def create_user(user: schema.User = Body(...)):
     user = jsonable_encoder(user)
     new_user = await db["user"].insert_one(user)
@@ -57,9 +58,10 @@ async def update_user(username: str, user: schema.UpdateUser = Body(...)):
     if (user_is_there := await db["user"].find_one({"username": username})) is not None:
         return user_is_there
     raise HTTPException(status_code=404, detail=f"Unable to find User {username}")
+ """
 
 
-@webapp.post(
+""" @webapp.post(
     "/question", response_description="Add a question", response_model=schema.Questions
 )
 async def create_q(question: schema.Questions = Body(...)):
@@ -81,9 +83,9 @@ async def show_question(nr: int):
         raise HTTPException(
             status_code=404, detail=f"Question {nr} wurde nicht gefunden"
         )
+ """
 
-
-@webapp.get(
+""" @webapp.get(
     "/question/",
     response_description="Get a random question",
     response_model=schema.RNDQuestions,
@@ -97,14 +99,14 @@ async def getRNDquestion(raise_error: bool):
         questions = await db["question"].find().to_list(length=100)
         lenght = len(questions)
         selection = random.randint(0, lenght - 1)
-        """ raise HTTPException(
+        raise HTTPException(
             status_code=404,
             detail="Any unexpected event accured pls try again is was True",
-        ) """
+        )
         return questions[selection]
+ """
 
-
-@webapp.post(
+""" @webapp.post(
     "/questions/log/{nr}",
     response_description="Answere question",
     response_model=schema.AnswereQuestion,
@@ -114,3 +116,4 @@ async def push_question(answere: schema.AnswereQuestion = Body(...)):
     new_answere = await db["answere"].insert_one(answere)
     lookup = await db["answere"].find_one({"_id": new_answere.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=lookup)
+ """
