@@ -1,8 +1,11 @@
 from fastapi import APIRouter, status, Body, HTTPException
 from fastapi.encoders import jsonable_encoder
+from fastapi.routing import run_endpoint_function
 from starlette.responses import JSONResponse
 
 import schema
+
+from security import Sicherheit
 
 from database import db
 
@@ -13,6 +16,8 @@ router = APIRouter()
 
 @router.post("/user", response_description="Add a user", response_model=schema.User)
 async def create_user(user: schema.User = Body(...)):
+    user.password = Sicherheit.get_pwd(user.password)
+    print(user.password)
     user = jsonable_encoder(user)
     new_user = await db["user"].insert_one(user)
     lookup_new_user = await db["user"].find_one({"_id": new_user.inserted_id})

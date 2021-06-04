@@ -31,6 +31,7 @@ class User(BaseModel):
     name: str = Field(...)
     username: str = Field(...)
     email: EmailStr = Field(...)
+    password: str = Field(...)
     age: int = Field(...)
     gender: str = Field(...)
     question_id: int = Field(...)
@@ -44,6 +45,7 @@ class User(BaseModel):
                 "name": "Gustav Ganz",
                 "username": "Gustav2589",
                 "email": "ganzganz@gmail.com",
+                "password": ",njs<dglknjökm.,m??8u",
                 "age": "13",
                 "gender": "m",
                 "question_id": "0",
