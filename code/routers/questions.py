@@ -28,7 +28,7 @@ async def create_q(question: schema.Questions = Body(...)):
     response_description="Look up a question",
     response_model=schema.Questions,
 )
-async def show_question(nr: int, current_user: sch):
+async def show_question(nr: int):
     if (question := await db["question"].find_one({"nr": nr})) is not None:
         return question
     else:
