@@ -1,5 +1,5 @@
 # MongoDB base module -> ObjectId
-from abc import ABC
+from typing import Optional
 from bson import ObjectId
 
 # import pydantic stuff
@@ -73,6 +73,22 @@ class UpdateUser(BaseModel):
         }
 
 
+class LogIn(BaseModel):
+    username: str = Field(...)
+    password: str = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "username": "Gustav Ganz",
+                "password": "GlupGlup",
+            }
+        }
+
+
 class Questions(BaseModel):
     id: PyMongoObjectID = Field(default_factory=PyMongoObjectID, alias="_id")
     nr: int = Field(...)
@@ -135,3 +151,7 @@ class AnswereQuestion(BaseModel):
         schema_extra = {
             "example": {"Answere": "2", "Username": "ABC", "question_nr": "13"}
         }
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None

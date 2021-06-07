@@ -1,6 +1,6 @@
 # Import fastAPI modules
 from fastapi import FastAPI  # , status, Body, HTTPException
-from routers import user, questions
+from routers import user, questions, auth
 
 # from fastapi.encoders import jsonable_encoder
 # from starlette.responses import JSONResponse
@@ -16,6 +16,7 @@ from routers import user, questions
 # create the web application itself
 webapp = FastAPI()
 
+webapp.include_router(auth.router)
 webapp.include_router(user.router)
 webapp.include_router(questions.router)
 

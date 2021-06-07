@@ -10,7 +10,7 @@ from database import db
 random.seed(667)
 
 # Init router instance
-router = APIRouter()
+router = APIRouter(tags=["Fragen"])
 
 
 @router.post(
@@ -28,7 +28,7 @@ async def create_q(question: schema.Questions = Body(...)):
     response_description="Look up a question",
     response_model=schema.Questions,
 )
-async def show_question(nr: int):
+async def show_question(nr: int, current_user: sch):
     if (question := await db["question"].find_one({"nr": nr})) is not None:
         return question
     else:

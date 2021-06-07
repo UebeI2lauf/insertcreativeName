@@ -1,27 +1,32 @@
-from fastapi import APIRouter, status, Body, HTTPException
+from fastapi import APIRouter, status, Body, HTTPException, Depends
 from fastapi.encoders import jsonable_encoder
-from fastapi.routing import run_endpoint_function
 from starlette.responses import JSONResponse
-
+import security
 import schema
 
-from security import Sicherheit
+import security
 
 from database import db
 
 
 # init router instance
-router = APIRouter()
+router = APIRouter(tags=["Nutzerverwaltung"])
 
 
 @router.post("/user", response_description="Add a user", response_model=schema.User)
 async def create_user(user: schema.User = Body(...)):
-    user.password = Sicherheit.get_pwd(user.password)
-    print(user.password)
+    user.password = security.get_pwd(user.password)
     user = jsonable_encoder(user)
     new_user = await db["user"].insert_one(user)
     lookup_new_user = await db["user"].find_one({"_id": new_user.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=lookup_new_user)
+
+
+@router.get("/users/me/", response_model=schema.TokenData)
+async def read_users_me(
+    current_user: schema.TokenData = Depends(security.get_this_user),
+):
+    return current_user
 
 
 @router.get(
