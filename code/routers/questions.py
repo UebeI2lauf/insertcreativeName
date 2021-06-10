@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, status, Body
+from fastapi import APIRouter, HTTPException, status, Body, Depends
 from starlette.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+import time
 import schema
 import random
+import security
 
 from database import db
 
@@ -16,7 +18,10 @@ router = APIRouter(tags=["Fragen"])
 @router.post(
     "/question", response_description="Add a question", response_model=schema.Questions
 )
-async def create_q(question: schema.Questions = Body(...)):
+async def create_q(
+    question: schema.Questions = Body(...),
+    current_user: schema.TokenData = Depends(security.get_this_user),
+):
     question = jsonable_encoder(question)
     new_q = await db["question"].insert_one(question)
     lookup_new_user = await db["question"].find_one({"_id": new_q.inserted_id})
@@ -28,7 +33,9 @@ async def create_q(question: schema.Questions = Body(...)):
     response_description="Look up a question",
     response_model=schema.Questions,
 )
-async def show_question(nr: int):
+async def show_question(
+    nr: int, current_user: schema.TokenData = Depends(security.get_this_user)
+):
     if (question := await db["question"].find_one({"nr": nr})) is not None:
         return question
     else:
@@ -39,23 +46,28 @@ async def show_question(nr: int):
 
 @router.get(
     "/question/",
-    response_description="Get a random question",
+    response_description="Get next question",
     response_model=schema.RNDQuestions,
 )
-async def getRNDquestion(raise_error: bool):
+async def get_next_question(
+    raise_error: bool, current_user: schema.TokenData = Depends(security.get_this_user)
+):
+    user = await db["user"].find_one({"username": current_user.username})
+    id = user["question_id"]
     if raise_error is not False:
+        error_codes = [400, 401, 403, 404, 408]
+        code = random.choice(error_codes)
+        db["log"].inster_one(
+            {"username": current_user.username, "code": code, "question_id": (id + 1)}
+        )
+        if code == 408:
+            time.sleep(30)
         raise HTTPException(
-            status_code=404, detail="Any unexpected event accured pls try again"
+            status_code=code, detail="Any unexpected event accured pls try again"
         )
     else:
-        questions = await db["question"].find().to_list(length=100)
-        lenght = len(questions)
-        selection = random.randint(0, lenght - 1)
-        """ raise HTTPException(
-            status_code=404,
-            detail="Any unexpected event accured pls try again is was True",
-        ) """
-        return questions[selection]
+        question = await db["question"].find_one({"nr": id})
+        return question
 
 
 @router.post(
@@ -63,7 +75,10 @@ async def getRNDquestion(raise_error: bool):
     response_description="Answere question",
     response_model=schema.AnswereQuestion,
 )
-async def push_question(answere: schema.AnswereQuestion = Body(...)):
+async def push_question(
+    answere: schema.AnswereQuestion = Body(...),
+    current_user: schema.TokenData = Depends(security.get_this_user),
+):
     answere = jsonable_encoder(answere)
     new_answere = await db["answere"].insert_one(answere)
     lookup = await db["answere"].find_one({"_id": new_answere.inserted_id})

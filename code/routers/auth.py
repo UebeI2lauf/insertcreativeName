@@ -21,7 +21,7 @@ async def login(request: OAuth2PasswordRequestForm = Depends()):
         )
 
     hash = identity["password"]
-    if not security.verify_pwd(user.password, hash):
+    if not await security.verify_pwd(user.password, hash):
         raise HTTPException(status_code=404, detail=f"Angaben incorrect")
 
     access_token = create_token(data={"sub": user.username})

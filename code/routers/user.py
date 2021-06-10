@@ -15,7 +15,8 @@ router = APIRouter(tags=["Nutzerverwaltung"])
 
 @router.post("/user", response_description="Add a user", response_model=schema.User)
 async def create_user(user: schema.User = Body(...)):
-    user.password = security.get_pwd(user.password)
+    user.password = await security.get_pwd(user.password)
+    user.question_id = 0
     user = jsonable_encoder(user)
     new_user = await db["user"].insert_one(user)
     lookup_new_user = await db["user"].find_one({"_id": new_user.inserted_id})
@@ -32,7 +33,9 @@ async def read_users_me(
 @router.get(
     "/user/{username}", response_description="Lookup a User", response_model=schema.User
 )
-async def show_student(username: str):
+async def show_student(
+    username: str, current_user: schema.TokenData = Depends(security.get_this_user)
+):
     if (user := await db["user"].find_one({"username": username})) is not None:
         return user
     else:
@@ -44,7 +47,11 @@ async def show_student(username: str):
 @router.post(
     "/user/{username}", response_description="mod User", response_model=schema.User
 )
-async def update_user(username: str, user: schema.UpdateUser = Body(...)):
+async def update_user(
+    username: str,
+    user: schema.UpdateUser = Body(...),
+    current_user: schema.TokenData = Depends(security.get_this_user),
+):
     user = {
         key: value for key, value in user.dict().items() if value is not None
     }  # We build a new dict with theb old values

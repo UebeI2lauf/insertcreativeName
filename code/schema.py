@@ -34,7 +34,7 @@ class User(BaseModel):
     password: str = Field(...)
     age: int = Field(...)
     gender: str = Field(...)
-    question_id: int = Field(...)
+    question_id: int = 0
 
     class Config:
         allow_population_by_field_name = True
