@@ -58,7 +58,7 @@ async def get_next_question(
         error_codes = [400, 401, 403, 404, 408]
         code = random.choice(error_codes)
         db["log"].inster_one(
-            {"username": current_user.username, "code": code, "question_id": (id + 1)}
+            {"username": current_user.username, "code": code, "question_id": (id)}
         )
         if code == 408:
             time.sleep(30)
