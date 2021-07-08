@@ -57,8 +57,8 @@ async def get_next_question(
     if raise_error is not False:
         error_codes = [400, 401, 403, 404, 408]
         code = random.choice(error_codes)
-        db["log"].inster_one(
-            {"username": current_user.username, "code": code, "question_id": (id)}
+        await db.log.insert_one(
+            ({"username": current_user.username, "code": code, "question_id": id})
         )
         if code == 408:
             time.sleep(30)
@@ -83,3 +83,7 @@ async def push_question(
     new_answere = await db["answere"].insert_one(answere)
     lookup = await db["answere"].find_one({"_id": new_answere.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=lookup)
+
+
+# db.user.updateOne({username: "seminar"},{$set: {"question_id": "1"}})
+# dimitri@dipf.de     drachsler@em.uni-frankfurt.de in cc.
