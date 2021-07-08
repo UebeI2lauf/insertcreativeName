@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{capt-of}
 % \usepackage{ngerman}
 \usepackage[ansinew]{inputenc}
 \usepackage[left=2.5cm,top=2.5cm]{geometry}
@@ -18,7 +19,7 @@
 \title{The effect of commen network problems on students academic performance in an elearning-Environment \thanks{Supported by Goethe University Frankfurt a. Main}}
 
 \author{Lucas Laub\inst{1}\orcidID{6621331} \and
-Second Author\inst{2}\orcidID{1111-2222-3333-4444}}
+Alexander Perekhrest \inst{2}\orcidID{6379748}}
 
 \institute{Goethe University Frankfurt, 60323 Frankfurt a. Main, Germany.}
 
@@ -38,6 +39,20 @@ differences.
 
 
 \section{Introduction}
+When trying to transfer an already existing method on a relatively new platform, 
+it's important to know the things that come with being on such a platform and the 
+possible influences those things might have on the method.\\\\
+
+In day-to-day usage of online platforms and services it's not uncommon to face some 
+issues, whether it's execution, connectivity and so on. E-Learning-platforms are not 
+particularly different to those. Therefore, we want to discuss, in this paper, to 
+which extent these problems can influence the test-results of being on such an 
+'issue-infected' platform in contrast to a well running platform with no issues.\\\\
+
+We tried to focus on the most frequent issues we faced in our experience of browsing 
+on different platforms, which are defined by HTTP-status-codes, like 400 (Bad Request), 401 
+(Unauthorized), 403 (Forbidden), 404 (Not Found), 408 (Request Timeout), as mostly being 'client-errors'.\\\\
+
 \section{Materials and Methodes}
 \subsection{Preperations}
 The experiment was conducted by creating a software implementing Fig.~\ref{fig1}.
@@ -63,7 +78,226 @@ the test group [TG]. Each group is made up by 50 girls and 50 boys for a total o
 It should be ensured that both groups prior to the experiment perform academicly similar, if not a
 comparison post experiment will be difficult.
 
+\newpage
 \section{Results}
+The results are displayed in chronological order of the analysis, there is
+no emphisis on the significans given by the order itself.
+
+\subsection{Controll Group vs Error Group}
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the controll group (50f/50m) and
+        the error group (50f/50m).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig2}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the controll group (50f/50m) the error group (50f/50m).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & controll group & error group \\
+        \hline
+        median & 53.0&43.5 \\
+        \hline
+        standart deviation & 29.278&29.826 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{0.728} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.467} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+\subsection{Controll Group Female vs Error Group Female}
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the controll group (50f) and
+        the error group (50f).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig3}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the controll group (50f) the error group (50f).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & controll group & error group \\
+        \hline
+        median & 55.5&40.0 \\
+        \hline
+        standart deviation & 27.85&30.933 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{0.949} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.345} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+\subsection{Controll Group Male vs Error Group Male }
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the controll group (50m) and
+        the error group (50m).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig4}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the controll group (50m) the error group (50m).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & controll group & error group \\
+        \hline
+        median & 52.5&50.5 \\
+        \hline
+        standart deviation & 30.638&28.495 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{0.08} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.936} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+\subsection{Controll Group vs Error Group}
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the controll group (50f) and
+        the controll group (50m).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig5}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the controll group (50f) the controll group (50m).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & controll group(f) & controll group(m) \\
+        \hline
+        median & 55.5&52.5 \\
+        \hline
+        standart deviation & 27.85&30.638 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{0.101} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.919} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+\subsection{Controll Group vs Error Group}
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the error group (50f) and
+        the error group (50m).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig6}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the error group (50f) the error group (50m).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & error group & error group \\
+        \hline
+        median & 40.0&50.5 \\
+        \hline
+        standart deviation & 30.933&28.495 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{- 0.759} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.45} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+\subsection{Controll Group vs Error Group}
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the controll group (50f) and
+        the error group (50m).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig7}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the controll group (50f) the error group (50m).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & controll group & error group \\
+        \hline
+        median & 55.5&50.5 \\
+        \hline
+        standart deviation & 27.85&28.495 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{0.19} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.85} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+\subsection{Controll Group vs Error Group}
+\begin{figure}
+    \begin{minipage}{0.45\textwidth}        
+        \includegraphics[width=\textwidth]{code/generate/all.png}
+        \caption{The colored squares in the boxplot displays
+        the upper and lower quartile of points earned by the controll group (50m) and
+        the error group (50f).The green line marks the mean of all datapoints in the group.
+        The gray line marks the median  of the given group.} \label{fig8}
+    \end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\captionof{table}{The calculated median, standart deviation and t, p-values
+    for the controll group (50m) the error group (50f).
+    The t,p-values were calculated by using a two-sided t-test.}
+\begin{tabular}[]{| c | c | c |}
+        \hline
+        & controll group & error group \\
+        \hline
+        median & 52.5&40.0 \\
+        \hline
+        standart deviation & 30.638&30.933 \\
+        \hline
+        t-value & \multicolumn{2}{c|}{0.81} \\
+        \hline
+        p-value & \multicolumn{2}{c|}{0.42} \\
+        \hline            
+\end{tabular}
+\end{minipage}
+\end{figure}
+
+
+
+
+
+
 \section{Discussion}
 \section{Conclusion}
 \section{Refernces}
