@@ -44,18 +44,16 @@ differences.
 \section{Introduction}
 When trying to transfer an already existing method on a relatively new platform, 
 it's important to know the things that come with being on such a platform and the 
-possible influences those things might have on the method.\\\\
+possible influences those things might have on the method.\\
 
 In day-to-day usage of online platforms and services it's not uncommon to face some 
 issues, whether it's execution, connectivity and so on. E-Learning-platforms are not 
 particularly different to those. Therefore, we want to discuss, in this paper, to 
 which extent these problems can influence the test-results of being on such an 
-'issue-infected' platform in contrast to a well running platform with no issues.\\\\
+'issue-infected' platform in contrast to a well running platform with no issues.\\
 
-We tried to focus on the most frequent issues we faced in our experience of browsing 
-on different platforms, which are defined by HTTP-status-codes, like 400 (Bad Request), 401 
-(Unauthorized), 403 (Forbidden), 404 (Not Found), 408 (Request Timeout), as mostly being 'client-errors'.\\\\
-\newpage
+We focused on commen network issues.Which are defined by HTTP-status-codes, like 400 (Bad Request), 401 
+(Unauthorized), 403 (Forbidden), 404 (Not Found), 408 (Request Timeout), as mostly being 'client-errors'.
 \section{Materials and Methodes}
 \subsection{Summary}
 To which extend do commen networks problems in an eLearning-Environment
@@ -86,7 +84,14 @@ to the server are needed, to rule out uncontrolled network problems.
 Half of the cumputers are manipulated and simulate the network problems with the
 use of the software.
 
-\subsection{}
+\subsection{Procedure}
+The participants are welcomed and thanked for their time.
+The students were randomly selected for either the controll group or the test group
+prospective known as the error group. Then the students where placed infront of a computer
+which was either manipulated or untouched based on their group.They then create an account
+and start solving the questions.
+After they finished all questions they log out.
+The students are rewarded with cookies and again thanked for their time.
 
 \begin{figure}
     \includegraphics[width=\textwidth]{UML Prototyp.PNG}
@@ -96,16 +101,15 @@ use of the software.
     The backend responsible for saving the collected data and ensuring the frontend
     remains operationale.} \label{fig1}
 \end{figure}
-
-
-\clearpage
+\newpage
 \section{Results}
 The results are displayed in chronological order of the analysis, there is
-no emphisis on the significans given by the order itself.
+no emphisis on the significans given by the order itself. The following data is
+what we would expect in an actual experiment. To recreate the data see \cite{ref_soft}.
 
 \subsection{Control Group(50f/50m) vs Error Group(50f/50m)}
 \begin{figure}[!h]
-    \begin{minipage}{0.43\textwidth}        
+    \begin{minipage}{0.4\textwidth}        
         \includegraphics[width=\textwidth]{code/generate/all.png}
         \caption{The colored squares in the boxplot displays
         the upper and lower quartile of points earned by the control group (50f/50m) and
@@ -113,7 +117,7 @@ no emphisis on the significans given by the order itself.
         The gray line marks the median  of the given group.} \label{fig2}
     \end{minipage}
 \hfill
-\begin{minipage}{0.43\textwidth}
+\begin{minipage}{0.4\textwidth}
 \captionof{table}{The calculated median, standart deviation and t, p-values
     for the control group (50f/50m) the error group (50f/50m).
     The t,p-values were calculated by using a two-sided t-test.}
@@ -134,8 +138,8 @@ no emphisis on the significans given by the order itself.
 \end{figure}
 
 \subsection{Control Group(50f) vs Error Group(50f)}
-\begin{figure}[!h]
-    \begin{minipage}{0.43\textwidth}        
+\begin{figure}[!ht]
+    \begin{minipage}{0.4\textwidth}        
         \includegraphics[width=\textwidth]{code/generate/all.png}
         \caption{The colored squares in the boxplot displays
         the upper and lower quartile of points earned by the control group (50f) and
@@ -143,7 +147,7 @@ no emphisis on the significans given by the order itself.
         The gray line marks the median  of the given group.} \label{fig3}
     \end{minipage}
 \hfill
-\begin{minipage}{0.43\textwidth}
+\begin{minipage}{0.4\textwidth}
 \captionof{table}{The calculated median, standart deviation and t, p-values
     for the control group (50f) the error group (50f).
     The t,p-values were calculated by using a two-sided t-test.}
@@ -164,7 +168,7 @@ no emphisis on the significans given by the order itself.
 \end{figure}
 
 \subsection{Control Group(50m) vs Error Group(50m) }
-\begin{figure}
+\begin{figure}[!h]
     \begin{minipage}{0.43\textwidth}        
         \includegraphics[width=\textwidth]{code/generate/all.png}
         \caption{The colored squares in the boxplot displays
@@ -325,14 +329,14 @@ However the performance of older students should be similar to the tested studen
 The study can make a general statement on network problems. However not all possible
 problems are simulated. It is possible that a problem exists that does affect the academic performance of
 students significantly. Also longterm effects can not be discoverd by this study since it is very time limited.
-Futhermore designflaws of the eLearning-Environment or limited to no access to a computer are problems that
-are overlooked or ignored. These problems require additional studys.
+Futhermore designflaws of the eLearning-Environment are also overlooked or ignored.
+These problems require additional studys.
 \section{Conclusion}
 In this paper we could clearly see the impact of platform-issues on the students performance in an 
 exam-scenario and it is not significant. There might still be certain aspect of long-term-effects,
 which we couldn't simulate due to our test setup, because there was a slight worsening happening 
-when comparing our outcomes. It would be very interesting to see, how much significance such things 
-like errors will show  in a long run with more variables included.
+when comparing our outcomes. Futher studys should focus on the longterm effect of technical problems
+to deepen our understanding of the technology.
 \section{Refernces}
 \begin{thebibliography}{8}
     \bibitem{ref_soft}
